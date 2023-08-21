@@ -1,0 +1,19 @@
+/* styles/Sidebar.module.css */
+.sidebar {
+    flex: 1;
+    background-color: #555;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .button {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #777;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,76 @@
+/* components/Login.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Background color for the entire page */
+}
+
+.centeredForm {
+  background-color: #fff; /* Background color for the form container */
+  padding: 80px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button {
+  padding: 15px 30px; /* Increase button padding for a larger size */
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px; /* Increase button font size */
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Change button color on hover */
+}
+
+.active {
+  box-shadow: 0 0 5px #007bff; /* Highlight the selected button */
+}
+
+.loginForm {
+  margin-top: 20px;
+  text-align: left; /* Align form fields to the left */
+}
+
+.loginForm label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.loginForm input {
+  width: 100%;
+  padding: 10px 15px; /* Add equal padding on the left and right sides */
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submitButton {
+  padding: 15px 30px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
