@@ -12,7 +12,7 @@ const Footer = () => {
       <FontAwesomeIcon icon={faInstagram} size="lg" />
       </div>
       <p>
-        made with <i className="fa fa-heart-o"></i> by Easy Tutorials
+        All Rights Reserved 2023©
       </p>
     </section>
   );
