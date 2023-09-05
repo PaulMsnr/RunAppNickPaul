@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import styles from '/components/Login.module.css'; // Import your CSS module
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const [firstName, setFirstName] = useState('');
@@ -9,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [userRole, setUserRole] = useState(null); // Initialize as null
+  const [userRole, setUserRole] = useState('current'); // Set the initial value to 'current'
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,10 +40,11 @@ const Login = () => {
   };
 
   return (
-    <div>          <Navbar/>
+    <div>          
+      <Navbar/>
  
-    <div className={styles.container}> {/* Apply centering style */}
-
+      <div
+        className={styles.container}>
       <div className={styles.centeredForm}>
 
         <h1>Login</h1>
@@ -182,6 +184,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    <Footer/>
     </div>
   );
 };

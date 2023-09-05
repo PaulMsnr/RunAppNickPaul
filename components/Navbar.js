@@ -30,7 +30,7 @@ const Navbar = () => {
             <Link href="/Contact">Contact</Link>
           </li>
           <li>
-            <Link href="/admin">Admin</Link>
+          <Link href="/Login">Login</Link>
           </li>
           <li>
             {/* User Symbol */}
