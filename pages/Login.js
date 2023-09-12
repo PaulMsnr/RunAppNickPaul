@@ -1,8 +1,8 @@
-// pages/login.js
 import React, { useState } from 'react';
 import styles from '/components/Login.module.css'; // Import your CSS module
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import axios from 'axios';
 
 const Login = () => {
   const [firstName, setFirstName] = useState('');
@@ -12,26 +12,35 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [userRole, setUserRole] = useState('current'); // Set the initial value to 'current'
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Initialize state variables for form data
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    email: ''
+  });
 
-    if (userRole === null) {
-      alert('Please select a user role.'); // Add validation for userRole
-      return;
+  // Handle changes in input fields
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    try {
+      // Send POST request to Flask API to create a new user
+      const response = await axios.post('http://localhost:5000/create_user', formData);
+      
+      // Log the response from the server
+      console.log('User created:', response.data);
+    } catch (error) {
+      // Handle errors
+      console.error('There was an error creating the user:', error);
     }
-
-    // Add your login or signup logic here, based on the selected userRole
-    console.log('User Role:', userRole);
-    console.log('Email:', email);
-    console.log('Password:', password);
-
-    if (userRole === 'new') {
-      console.log('First Name:', firstName);
-      console.log('Last Name:', lastName);
-      console.log('Confirm Password:', confirmPassword);
-    }
-
-    // ...
   };
 
   // Function to set the selected user role
@@ -40,151 +49,115 @@ const Login = () => {
   };
 
   return (
-    <div>          
-      <Navbar/>
- 
-      <div
-        className={styles.container}>
-      <div className={styles.centeredForm}>
-
-        <h1>Login</h1>
-        <div className={styles.buttonContainer}> {/* Style button container */}
-          <button
-            className={userRole === 'new' ? styles.active : ''}
-            onClick={() => handleUserRoleClick('new')}
-          >
-            New User
-          </button>
-          <button
-            className={userRole === 'current' ? styles.active : ''}
-            onClick={() => handleUserRoleClick('current')}
-          >
-            Current User
-          </button>
-          <button
-            className={userRole === 'admin' ? styles.active : ''}
-            onClick={() => handleUserRoleClick('admin')}
-          >
-            Admin
-          </button>
+    <div>
+      <Navbar />
+      <div className={styles.container}>
+        <div className={styles.centeredForm}>
+          <h1>Login</h1>
+          <div className={styles.buttonContainer}>
+            <button
+              className={userRole === 'new' ? styles.active : ''}
+              onClick={() => handleUserRoleClick('new')}
+            >
+              New User
+            </button>
+            <button
+              className={userRole === 'current' ? styles.active : ''}
+              onClick={() => handleUserRoleClick('current')}
+            >
+              Current User
+            </button>
+            <button
+              className={userRole === 'admin' ? styles.active : ''}
+              onClick={() => handleUserRoleClick('admin')}
+            >
+              Admin
+            </button>
+          </div>
+          <form onSubmit={handleSubmit} className={styles.loginForm}>
+            {userRole === 'new' && (
+              <div>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={formData.username}
+                  onChange={handleChange}
+                />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <button type="submit">Create User</button>
+              </div>
+            )}
+            {userRole === 'current' && (
+              <div>
+                <label>Email:</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <label>Password:</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+            )}
+            {userRole === 'admin' && (
+              <div>
+                <label>First Name:</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+                <label>Last Name:</label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+                <label>Email:</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+                <label>Password:</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+            )}
+            <button type="submit" className={styles.submitButton}>
+              Login or Sign Up
+            </button>
+          </form>
         </div>
-        <form onSubmit={handleSubmit} className={styles.loginForm}> {/* Apply login form style */}
-          {userRole === 'admin' && ( // Render the admin login form
-            <div>
-              <div>
-                <label>First Name:</label>
-                <input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Last Name:</label>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Email:</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Password:</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-          )}
-          {userRole === 'new' && ( // Render the sign-up form for "New User"
-            <div>
-              <div>
-                <label>First Name:</label>
-                <input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Last Name:</label>
-                <input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Email:</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Password:</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Confirm Password:</label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-          )}
-          {userRole === 'current' && ( // Render the login form for "Current User"
-            <div>
-              <div>
-                <label>Email:</label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Password:</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-          )}
-          <button type="submit" className={styles.submitButton}>Login or Sign Up</button> {/* Style the submit button */}
-        </form>
       </div>
-    </div>
-    <Footer/>
+      <Footer />
     </div>
   );
 };
